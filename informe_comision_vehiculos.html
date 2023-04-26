@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.335">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2023-04-26">
+
+<title>Informe comisión de vehículos IER</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="informe_comision_vehiculos_files/libs/clipboard/clipboard.min.js"></script>
+<script src="informe_comision_vehiculos_files/libs/quarto-html/quarto.js"></script>
+<script src="informe_comision_vehiculos_files/libs/quarto-html/popper.min.js"></script>
+<script src="informe_comision_vehiculos_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="informe_comision_vehiculos_files/libs/quarto-html/anchor.min.js"></script>
+<link href="informe_comision_vehiculos_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="informe_comision_vehiculos_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="informe_comision_vehiculos_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="informe_comision_vehiculos_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="informe_comision_vehiculos_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Informe comisión de vehículos IER</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 26, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<p>La información presentada en este documento es extraída del archivo <strong>cuentas_y_plazos_vehiculos_IER</strong> alojado en el repositorio de Drive <a href="https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link">“3.vehículos IER”</a>. Este <code>html</code> fue producido en <a href="https://quarto.org">Quarto</a>, para generarlo debe contar con <code>R 3.3.0+</code>, <code>RStudio 2023.03.0+</code>, el archivo fuente (<a href="https://quarto.org">informe_comision_vehiculos.qmd</a>) y la actualización local de la base de datos (<a href="https://quarto.org">cuentas_y_plazos_vehiculos_IER.xlsx</a>).</p>
+<p>El informe contiene:</p>
+<ol type="1">
+<li><p><strong>Finanzas generales.</strong> Dinero disponible en cuenta y caja chica, e información necesaria para estimar el costo del alquiler. También incluye resumen del gastos mensual por vehículo y acciones de mantenimiento.</p></li>
+<li><p><strong>Uso.</strong> Resumen del número de días de alquiler durante el presente y pasado año.</p></li>
+<li><p><strong>Fechas límite.</strong> Incluye vencimiento de botiquín, extintor, VTV y pólizas de seguro. También se contempla fecha estimada para mantenimiento general de cada vehículo dado (e.g.&nbsp;alineado y balanceo, cambio de aceite, pastillas de freno, etc.).</p></li>
+<li><p><strong>Nómina actual de conductores.</strong> Corresponde a aquellas personas habilitadas por el IER y con cédula azul vigente. También incluye información de la categoría del carnet de manejo y vencimiento.</p></li>
+</ol>
+<section id="finanzas-generales" class="level1">
+<h1>1. Finanzas generales</h1>
+<section id="monto-de-alquiler." class="level3">
+<h3 class="anchored" data-anchor-id="monto-de-alquiler.">Monto de alquiler.</h3>
+<p>El alquiler de los vehículos se estima a partir del valor del tanque lleno de <code>gasoil</code> para la S10 y <code>nafta super</code> en el caso de la Kangoo (precio por litro YPF Buenos Aires).</p>
+<ul>
+<li>Kangoo 55 L</li>
+<li>S10 70 L</li>
+</ul>
+<p>El valor mensual del combustible se consulta en el siguiente enlace <a href="https://surtidores.com.ar/precios/" class="uri">https://surtidores.com.ar/precios/</a>.</p>
+</section>
+<section id="dinero-disponible" class="level3">
+<h3 class="anchored" data-anchor-id="dinero-disponible">Dinero disponible</h3>
+<div class="cell">
+
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Saldo en cuenta= 59426$</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Saldo en caja chica= 930$</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Total= 60356$</code></pre>
+</div>
+</div>
+</section>
+<section id="gastos" class="level3">
+<h3 class="anchored" data-anchor-id="gastos">Gastos</h3>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>En lo que va corrido del año, 2023-04-26, no se han reportado gastos.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>En los dos años anteriores tenemos:</code></pre>
+</div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">auto</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">gasto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">s10</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">101320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kangoo</td>
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">68476</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">s10</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">kangoo</td>
+<td style="text-align: right;">2022</td>
+<td style="text-align: right;">90155</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="acciones-de-mantenimiento" class="level3">
+<h3 class="anchored" data-anchor-id="acciones-de-mantenimiento">Acciones de mantenimiento</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="informe_comision_vehiculos_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li>Nota 1. Las columnas solo aplican para el auto en el que se realizó el gasto.</li>
+<li>Nota 2. Si una categoría de gasto no posee columna para ambos autos, indica que en el archivo <strong>cuentas_y_plazos_vehiculos_IER</strong> esta celda es un <code>NA</code> en la columna <code>monto</code>.</li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="uso" class="level1">
+<h1>2. Uso</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="informe_comision_vehiculos_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
+<p></p><figcaption class="figure-caption">Número de días de alquiler durante el presente y los dos años anteriores.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="fechas-límite" class="level1">
+<h1>3. Fechas límite</h1>
+<section id="vencimientos" class="level3">
+<h3 class="anchored" data-anchor-id="vencimientos">Vencimientos</h3>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="informe_comision_vehiculos_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="service" class="level3">
+<h3 class="anchored" data-anchor-id="service">Service</h3>
+<p>El service anual para la <code>s10</code> está programado para el mes de <strong>octubre</strong>; para la <code>kangoo</code> está programado para <strong>noviembre</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="informe_comision_vehiculos_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="nómina-actual-de-conductores" class="level1">
+<h1>4. Nómina actual de conductores</h1>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Nombre</th>
+<th style="text-align: left;">cargo</th>
+<th style="text-align: left;">tarjeta_azul</th>
+<th style="text-align: left;">categoria_licencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Andres Ramirez</td>
+<td style="text-align: left;">becario doctoral</td>
+<td style="text-align: left;">Si</td>
+<td style="text-align: left;">B1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

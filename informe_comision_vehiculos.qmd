@@ -1,0 +1,354 @@
+---
+title: "Informe comisión de vehículos IER"
+format: html
+editor: visual
+date: 'last-modified'
+mainfont: 'Times New Roman'
+---
+
+La información presentada en este documento es extraída del archivo **cuentas_y_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://quarto.org)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
+
+El informe contiene:
+
+1. **Finanzas generales.** Dinero disponible en cuenta y caja chica, e información necesaria para estimar el costo del alquiler. También incluye resumen del gastos mensual por vehículo y acciones de mantenimiento.
+
+2. **Uso.** Resumen del número de días de alquiler durante el presente y pasado año.
+
+3. **Fechas límite.** Incluye vencimiento de botiquín, extintor, VTV y pólizas de seguro. También se contempla fecha estimada para mantenimiento general de cada vehículo dado (e.g. alineado y balanceo, cambio de aceite, pastillas de freno, etc.).
+
+4. **Nómina actual de conductores.** Corresponde a aquellas personas habilitadas por el IER y con cédula azul vigente. También incluye información de la categoría del carnet de manejo y vencimiento. 
+
+
+# 1. Finanzas generales
+
+### Monto de alquiler.
+El alquiler de los vehículos se estima a partir del valor del tanque lleno de `gasoil` para la S10 y `nafta super` en el caso de la Kangoo (precio por litro YPF Buenos Aires).
+
+- Kangoo 55 L
+- S10 70 L
+
+El valor mensual del combustible se consulta en el siguiente enlace <https://surtidores.com.ar/precios/>.
+
+
+### Dinero disponible
+
+```{r}
+#| echo: false 
+#| warning: false
+#| message: false 
+
+paquetes <- c("tidyverse", "magrittr", "lubridate", "readxl", 'cowplot')
+installed <- row.names(as.data.frame(installed.packages()))
+
+for (i in 1:length(paquetes)) {
+  if (paquetes[[i]] %in% installed) {
+    library(paquetes[[i]], character.only = T)
+  } else {
+    print("Instalando paquete", paquetes[[i]])
+    install.packages(paquetes[[i]])
+    library(paquetes[[i]], character.only = T)
+  }
+}
+
+cuentas <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", col_names = T, sheet = 1,
+                na = "NA")
+
+gastos <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", col_names = T, sheet = 2,
+                    na = "NA")
+
+gastos[] <- lapply(gastos, function(x) if (is.character(x)) as.factor(x) else(x))
+
+gastos$auto <- factor(gastos$auto, labels = tolower(levels(gastos$auto)))
+
+gastos$fecha_1 <- make_date(gastos$year, month(gastos$fecha, label = T))
+
+```
+
+```{r}
+#| echo: false 
+
+message(paste("Saldo en cuenta= ", cuentas[1, grep("en_cuenta", colnames(cuentas))], 
+        "$", sep = ""))
+message(paste("Saldo en caja chica= ", cuentas[1, grep("chica", colnames(cuentas))], 
+        "$", sep = ""))
+message(paste("Total= ", cuentas[1, grep("chica", colnames(cuentas))] +
+          cuentas[1, grep("en_cuenta", colnames(cuentas))], 
+        "$", sep = ""))
+
+```
+
+### Gastos
+```{r}
+#| echo: false
+if (sum(gastos[gastos$year == year(today()), "monto"]$monto) == 0) {
+  message(paste("En lo que va corrido del año, ", 
+                today(), ', no se han reportado gastos.', sep = ''))
+  
+  message('En los dos años anteriores tenemos:')
+  
+  gastos |> 
+    group_by(auto, year) |> 
+    transmute(gasto = sum(monto, na.rm = T)) |> 
+    unique() |> 
+    filter(auto != 'ambas', year == year(today())-1 |
+             year == year(today())-2) |> 
+    na.omit() |> 
+    knitr::kable()
+  
+  
+} else {
+  gastos |> 
+    group_by(auto, year) |> 
+    transmute(gasto = sum(monto, na.rm = T)) |> 
+    unique() |> 
+    filter(auto != 'ambas', year == year(today())) |> 
+    na.omit() |> 
+    knitr::kable()
+}
+```
+
+### Acciones de mantenimiento
+```{r}
+#| echo: false
+#| warning: false
+#| fig.height: 6 
+
+if (sum(gastos[gastos$year == year(today()), "monto"]$monto) == 0) {
+  message(paste("En lo que va corrido del año, ", 
+                today(), ', no se han reportado gastos.', sep = ''))
+  
+  message('Arreglos y gastos reportados del año anterior:')
+  
+  gastos |> 
+    filter(year == year(today())-1) |>
+    mutate(año = as.factor(year)) |> 
+    ggplot(aes(rubro, monto, fill = 'auto')) +
+    stat_summary(fun = 'sum', geom = 'bar') +
+    facet_wrap(~ auto, scales = 'fixed') +
+    scale_fill_manual(values = c('tan1', 'cyan4')) +
+    scale_y_continuous(breaks = seq(0, 100000, 3000)) +
+    ggtitle(label = paste(year(today())-1)) +
+    labs(x = NULL, y = 'Valor ($)') +
+    theme_bw() +
+    theme(text = element_text(family = 'Times New Roman'),
+          axis.text.x = element_text(angle = 65, hjust = 1, vjust = 1),
+          legend.position = 'none')
+  
+  
+} else {
+  message('Arreglos y gastos reportados del presente año:')
+  
+  gastos |> 
+    filter(year == year(today())) |>
+    mutate(año = as.factor(year)) |> 
+    ggplot(aes(rubro, monto, fill = 'auto')) +
+    stat_summary(fun = 'sum', geom = 'bar') +
+    facet_wrap(~ auto, scales = 'fixed') +
+    scale_fill_manual(values = c('tan1', 'cyan4')) +
+    ggtitle(label = paste(year(today()))) +
+    scale_y_continuous(breaks = seq(0, 100000, 3000)) +
+    labs(x = NULL, y = 'Valor ($)') +
+    theme_bw() +
+    theme(text = element_text(family = 'Times New Roman'),
+          axis.text.x = element_text(angle = 65, hjust = 1, vjust = 1),
+          legend.position = 'none')
+}
+
+
+```
+
+- Nota 1. Las columnas solo aplican para el auto en el que se realizó el gasto.
+- Nota 2. Si una categoría de gasto no posee columna para ambos autos, indica que en el archivo **cuentas_y_plazos_vehiculos_IER** esta celda es un `NA` en la columna `monto`.  
+
+
+
+
+______________________________________________________
+
+
+# 2. Uso
+
+```{r}
+#| echo: false
+#| warning: false
+#| fig.height: 4
+#| fig-width: 8
+#| fig-cap: Número de días de alquiler durante el presente y los dos años anteriores. 
+
+
+
+cuentas$fecha <- make_date(cuentas$year, month(cuentas$`fecha inicio`, label = T))
+
+cuentas[] <- lapply(cuentas, function(x) if (is.character(x)) as.factor(x) else (x))
+
+cuentas$rodado <- factor(cuentas$rodado, labels = tolower(levels(cuentas$rodado)))
+
+uso3y <- 
+  cuentas |> 
+  group_by(fecha, rodado) |>
+  transmute(uso_dias = sum(no_dias, na.rm = T), 
+            year = as.factor(year), 
+            mes = month(fecha, label = T)) |> 
+  unique() |> 
+  filter(rodado == 'kangoo' | rodado == 's10',
+           year == as.character(year(today())) |
+           year == as.character(year(today()) - 1) |
+           year == as.character(year(today()) - 2)) |> 
+  ggplot(aes(mes, uso_dias, color = rodado, fill = rodado)) +
+  stat_summary(fun = 'sum', geom = 'bar', position = position_dodge(width = 0.65), 
+               width = 0.5) +
+  #geom_point(alpha = 0.5) +
+  #geom_line(aes(group = 2), alpha = 0.7) +
+  facet_wrap(~year, scales = "free_y") +
+  labs(x = "", y = 'Días de alquiler') +
+  theme_bw() +
+  #scale_x_date(date_breaks = 'month') +
+  scale_color_manual(values = c('tan1', 'cyan4')) +
+  scale_fill_manual(values = c('tan1', 'cyan4')) +
+  scale_y_continuous(breaks = seq(1, 20, 1)) +
+  theme(#panel.grid = element_blank(),
+        text = element_text(family = 'Times New Roman'),
+        axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
+        legend.title = element_blank(),
+        legend.position = 'top')
+
+uso3y
+
+```
+
+_______________________________________________________
+
+# 3. Fechas límite
+
+### Vencimientos
+```{r}
+#| echo: false
+#| warning: false
+
+
+vencimiento <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", 
+                         col_names = T, sheet = 3, na = "NA")
+
+vencimiento$y_axis <- seq.Date(from = ymd(20220101), to = ymd(20250101), 
+                               length.out = nrow(vencimiento))
+
+vencimiento |> 
+  filter(elemento != 'tarjeta_verde') |> 
+  mutate(today = now()) |> 
+  ggplot() +
+  geom_linerange(aes(x = elemento, y = vencimiento, ymin = today, 
+                     ymax = vencimiento), linetype = 3,
+                 color = ifelse(vencimiento[vencimiento$elemento != 'tarjeta_verde',]$vencimiento < now(), 
+                                'red', 'black')) +
+  geom_point(aes(elemento, vencimiento)) +
+  facet_wrap(~ auto) +
+  geom_hline(yintercept = now(), linetype = 1, 
+             color = 'tomato') +
+  geom_label(label = paste('Hoy:', today()), x = 1.1, y = now(),
+             size = 3, family = 'Times New Roman') +
+  theme_bw() +
+  labs(x = NULL, y = NULL) +
+  scale_y_datetime(date_breaks = '3 months') +
+  theme(text = element_text(family = 'Times New Roman'))
+
+
+```
+
+### Service
+
+El service anual para la `s10` está programado para el mes de **octubre**; para la `kangoo` está programado para **noviembre**.
+
+```{r}
+#| echo: false
+#| warning: false
+
+service <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", 
+                     col_names = T, sheet = 4, na = "NA")
+
+s10 <- service |> 
+        filter(auto == 's10') |> 
+        transmute(auto = auto,
+                  tipo = tipo,
+                  fecha = as.Date(fecha),
+                  km = km + service$km[[1]])
+s10$km[[1]] <- service$km[[1]]
+
+
+kangoo <- service |> 
+  filter(auto == 'kangoo') |> 
+  transmute(auto = auto,
+            tipo = tipo,
+            fecha = as.Date(fecha),
+            km = km + service$km[[2]])
+kangoo$km[[1]] <- service$km[[2]]
+
+s10_plot <- 
+  s10 |>
+  na.omit(s10) |> 
+  ggplot(aes(as.character(fecha), km)) +
+  stat_summary(fun = 'min', geom = 'bar', position = 
+                 position_dodge(width = 0.1), width = 0.1, 
+               color = 'cyan4', fill = 'cyan4', alpha = 0.5) +
+  geom_hline(yintercept = s10[-1, ]$km, linetype = 3) +
+  geom_label(data = tibble(lab = s10$tipo[-1], 
+                           x = 1,
+                           y = s10$km[-1]), aes(x, y, label = lab),
+             position = position_jitter(height = 0.5, width = 0.3), 
+             size = 3, family = 'Times New Roman') +
+  theme_bw() +
+  labs(y = 'Kilometraje', x = NULL) +
+  scale_y_continuous(breaks = seq(0, 250000, 15000)) +
+  theme(text = element_text(family = 'Times New Roman'), 
+        panel.grid = element_blank())
+
+kangoo_plot <- 
+  kangoo |>
+  na.omit(kangoo) |> 
+  ggplot(aes(as.character(fecha), km)) +
+  stat_summary(fun = 'min', geom = 'bar', position = 
+                 position_dodge(width = 0.1), width = 0.1, 
+               color = 'cyan4', fill = 'cyan4', alpha = 0.5) +
+  geom_hline(yintercept = kangoo[-1, ]$km, linetype = 3) +
+  geom_label(data = tibble(lab = s10$tipo[-1], 
+                           x = 1,
+                           y = kangoo$km[-1]), aes(x, y, label = lab),
+             position = position_jitter(height = 0.5, width = 0.3), 
+             size = 3, family = 'Times New Roman') +
+  theme_bw() +
+  labs(y = 'Kilometraje', x = NULL) +
+  scale_y_continuous(breaks = seq(0, 250000, 15000)) +
+  theme(text = element_text(family = 'Times New Roman'), 
+        panel.grid = element_blank())
+
+
+plot_grid(s10_plot, kangoo_plot, ncol = 2)
+
+```
+
+_______________________________________________________
+
+# 4. Nómina actual de conductores
+
+```{r}
+#| echo: false
+
+conductores <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", 
+                     col_names = T, sheet = 5, na = "NA")
+
+knitr::kable(conductores)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

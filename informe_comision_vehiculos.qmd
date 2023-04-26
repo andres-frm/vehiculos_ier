@@ -1,12 +1,14 @@
 ---
 title: "Informe comisión de vehículos IER"
-format: html
+format:
+  html:
+    embed-resources: true
 editor: visual
 date: 'last-modified'
 mainfont: 'Times New Roman'
 ---
 
-La información presentada en este documento es extraída del archivo **cuentas_y_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://quarto.org)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
+La información presentada en este documento es extraída del archivo **cuentas_y_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://github.com/andres-frm/vehiculos_ier/blob/main/informe_comision_vehiculos.qmd)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
 
 El informe contiene:
 

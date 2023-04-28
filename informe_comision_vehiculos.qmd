@@ -8,29 +8,28 @@ date: 'last-modified'
 mainfont: 'Times New Roman'
 ---
 
-La información presentada en este documento es extraída del archivo **cuentas_y_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://github.com/andres-frm/vehiculos_ier/blob/main/informe_comision_vehiculos.qmd)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
+La información presentada en este documento es extraída del archivo **cuentas_y\_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://github.com/andres-frm/vehiculos_ier/blob/main/informe_comision_vehiculos.qmd)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
 
 El informe contiene:
 
-1. **Finanzas generales.** Dinero disponible en cuenta y caja chica, e información necesaria para estimar el costo del alquiler. También incluye resumen del gastos mensual por vehículo y acciones de mantenimiento.
+1.  **Finanzas generales.** Dinero disponible en cuenta y caja chica, e información necesaria para estimar el costo del alquiler. También incluye resumen del gastos mensual por vehículo y acciones de mantenimiento.
 
-2. **Uso.** Resumen del número de días de alquiler durante el presente y pasado año.
+2.  **Uso.** Resumen del número de días de alquiler durante el presente y pasado año.
 
-3. **Fechas límite.** Incluye vencimiento de botiquín, extintor, VTV y pólizas de seguro. También se contempla fecha estimada para mantenimiento general de cada vehículo dado (e.g. alineado y balanceo, cambio de aceite, pastillas de freno, etc.).
+3.  **Fechas límite.** Incluye vencimiento de botiquín, extintor, VTV y pólizas de seguro. También se contempla fecha estimada para mantenimiento general de cada vehículo dado (e.g. alineado y balanceo, cambio de aceite, pastillas de freno, etc.).
 
-4. **Nómina actual de conductores.** Corresponde a aquellas personas habilitadas por el IER y con cédula azul vigente. También incluye información de la categoría del carnet de manejo y vencimiento. 
-
+4.  **Nómina actual de conductores.** Corresponde a aquellas personas habilitadas por el IER y con cédula azul vigente. También incluye información de la categoría del carnet de manejo y vencimiento.
 
 # 1. Finanzas generales
 
 ### Monto de alquiler.
+
 El alquiler de los vehículos se estima a partir del valor del tanque lleno de `gasoil` para la S10 y `nafta super` en el caso de la Kangoo (precio por litro YPF Buenos Aires).
 
-- Kangoo 55 L
-- S10 70 L
+-   Kangoo 55 L
+-   S10 70 L
 
 El valor mensual del combustible se consulta en el siguiente enlace <https://surtidores.com.ar/precios/>.
-
 
 ### Dinero disponible
 
@@ -46,11 +45,12 @@ for (i in 1:length(paquetes)) {
   if (paquetes[[i]] %in% installed) {
     library(paquetes[[i]], character.only = T)
   } else {
-    print("Instalando paquete", paquetes[[i]])
+    print(paste("Instalando paquete", paquetes[[i]]))
     install.packages(paquetes[[i]])
     library(paquetes[[i]], character.only = T)
   }
 }
+
 
 cuentas <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", col_names = T, sheet = 1,
                 na = "NA")
@@ -80,6 +80,7 @@ message(paste("Total= ", cuentas[1, grep("chica", colnames(cuentas))] +
 ```
 
 ### Gastos
+
 ```{r}
 #| echo: false
 if (sum(gastos[gastos$year == year(today()), "monto"]$monto) == 0) {
@@ -110,6 +111,7 @@ if (sum(gastos[gastos$year == year(today()), "monto"]$monto) == 0) {
 ```
 
 ### Acciones de mantenimiento
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -159,14 +161,10 @@ if (sum(gastos[gastos$year == year(today()), "monto"]$monto) == 0) {
 
 ```
 
-- Nota 1. Las columnas solo aplican para el auto en el que se realizó el gasto.
-- Nota 2. Si una categoría de gasto no posee columna para ambos autos, indica que en el archivo **cuentas_y_plazos_vehiculos_IER** esta celda es un `NA` en la columna `monto`.  
+-   Nota 1. Las columnas solo aplican para el auto en el que se realizó el gasto.
+-   Nota 2. Si una categoría de gasto no posee columna para ambos autos, indica que en el archivo **cuentas_y\_plazos_vehiculos_IER** esta celda es un `NA` en la columna `monto`.
 
-
-
-
-______________________________________________________
-
+------------------------------------------------------------------------
 
 # 2. Uso
 
@@ -218,11 +216,12 @@ uso3y
 
 ```
 
-_______________________________________________________
+------------------------------------------------------------------------
 
 # 3. Fechas límite
 
 ### Vencimientos
+
 ```{r}
 #| echo: false
 #| warning: false
@@ -327,7 +326,7 @@ plot_grid(s10_plot, kangoo_plot, ncol = 2)
 
 ```
 
-_______________________________________________________
+------------------------------------------------------------------------
 
 # 4. Nómina actual de conductores
 
@@ -340,17 +339,3 @@ conductores <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx",
 knitr::kable(conductores)
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-

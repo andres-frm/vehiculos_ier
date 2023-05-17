@@ -322,7 +322,8 @@ kangoo_plot <-
         panel.grid = element_blank())
 
 
-plot_grid(s10_plot, kangoo_plot, ncol = 2)
+plot_grid(s10_plot, kangoo_plot, ncol = 2, 
+          labels = c("s10", "kangoo"))
 
 ```
 

@@ -337,6 +337,6 @@ plot_grid(s10_plot, kangoo_plot, ncol = 2,
 conductores <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", 
                      col_names = T, sheet = 5, na = "NA")
 
-knitr::kable(conductores)
+knitr::kable(conductores[order(conductores$Nombre), ])
 
 ```

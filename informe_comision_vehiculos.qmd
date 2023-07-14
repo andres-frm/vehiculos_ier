@@ -4,9 +4,30 @@ format:
   html:
     embed-resources: true
 editor: visual
-date: 'last-modified'
 mainfont: 'Times New Roman'
 ---
+
+```{r}
+#| echo: false 
+#| warning: false
+#| message: false 
+
+paquetes <- c("tidyverse", "magrittr", "lubridate", "readxl", 'cowplot')
+installed <- row.names(as.data.frame(installed.packages()))
+
+for (i in 1:length(paquetes)) {
+  if (paquetes[[i]] %in% installed) {
+    library(paquetes[[i]], character.only = T)
+  } else {
+    print(paste("Instalando paquete", paquetes[[i]]))
+    install.packages(paquetes[[i]])
+    library(paquetes[[i]], character.only = T)
+  }
+}
+
+
+paste('Actualizado: ', today(), sep = "")
+```
 
 La información presentada en este documento es extraída del archivo **cuentas_y\_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://github.com/andres-frm/vehiculos_ier/blob/main/informe_comision_vehiculos.qmd)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
 
@@ -37,19 +58,6 @@ El valor mensual del combustible se consulta en el siguiente enlace <https://sur
 #| echo: false 
 #| warning: false
 #| message: false 
-
-paquetes <- c("tidyverse", "magrittr", "lubridate", "readxl", 'cowplot')
-installed <- row.names(as.data.frame(installed.packages()))
-
-for (i in 1:length(paquetes)) {
-  if (paquetes[[i]] %in% installed) {
-    library(paquetes[[i]], character.only = T)
-  } else {
-    print(paste("Instalando paquete", paquetes[[i]]))
-    install.packages(paquetes[[i]])
-    library(paquetes[[i]], character.only = T)
-  }
-}
 
 
 cuentas <- read_xlsx("cuentas_y_plazos_vehiculos_IER.xlsx", col_names = T, sheet = 1,

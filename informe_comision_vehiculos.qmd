@@ -29,7 +29,7 @@ for (i in 1:length(paquetes)) {
 paste('Actualizado: ', today(), sep = "")
 ```
 
-La información presentada en este documento es extraída del archivo **cuentas_y\_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://github.com/andres-frm/vehiculos_ier/blob/main/informe_comision_vehiculos.qmd)) y la actualización local de la base de datos ([cuentas_y\_plazos_vehiculos_IER.xlsx](https://quarto.org)).
+La información presentada en este documento es extraída del archivo **cuentas_y_plazos_vehiculos_IER** alojado en el repositorio de Drive ["3.vehículos IER"](https://drive.google.com/drive/folders/1dkgFBlNmLiKsD2cTdqTORJRr-4GCgmgT?usp=share_link). Este `html` fue producido en [Quarto](https://quarto.org), para generarlo debe contar con `R 3.3.0+`, `RStudio 2023.03.0+`, el archivo fuente ([informe_comision_vehiculos.qmd](https://github.com/andres-frm/vehiculos_ier/blob/main/informe_comision_vehiculos.qmd)) y la actualización local de la base de datos ([cuentas_y_plazos_vehiculos_IER.xlsx](https://quarto.org)).
 
 El informe contiene:
 
@@ -170,7 +170,7 @@ if (sum(gastos[gastos$year == year(today()), "monto"]$monto) == 0) {
 ```
 
 -   Nota 1. Las columnas solo aplican para el auto en el que se realizó el gasto.
--   Nota 2. Si una categoría de gasto no posee columna para ambos autos, indica que en el archivo **cuentas_y\_plazos_vehiculos_IER** esta celda es un `NA` en la columna `monto`.
+-   Nota 2. Si una categoría de gasto no posee columna para ambos autos, indica que en el archivo **cuentas_y_plazos_vehiculos_IER** esta celda es un `NA` en la columna `monto`.
 
 ------------------------------------------------------------------------
 

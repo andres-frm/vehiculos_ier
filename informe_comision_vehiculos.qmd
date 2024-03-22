@@ -45,10 +45,8 @@ El informe contiene:
 
 ### Monto de alquiler.
 
-El alquiler de los vehículos se estima a partir del valor del tanque lleno de `gasoil` para la S10 y `nafta super` en el caso de la Kangoo (precio por litro YPF Buenos Aires).
+El alquiler de los vehículos se estima a partir del valor del tanque lleno de  `nafta super` para la Kangoo (55 L) (precio por litro YPF Buenos Aires).
 
--   Kangoo 55 L
--   S10 70 L
 
 El valor mensual del combustible se consulta en el siguiente enlace <https://surtidores.com.ar/precios/>.
 
